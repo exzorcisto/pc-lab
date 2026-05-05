@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('socket')->nullable(); // Для CPU/MB
             $table->string('ram_type')->nullable(); // DDR4/DDR5
             $table->integer('tdp')->nullable(); // Энергопотребление
+            $table->integer('power')->nullable(); // Мощность БП в Ваттах
             $table->string('form_factor')->nullable(); // ATX, mATX
             $table->json('specifications')->nullable(); // Все остальные доп. параметры
             $table->integer('performance_index')->default(0);

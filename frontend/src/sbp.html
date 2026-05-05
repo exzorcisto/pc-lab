@@ -1,0 +1,19 @@
+<div style="text-align: center; font-family: sans-serif; padding: 50px;">
+    <img src="https://sbp.nspk.ru/assets/img/logo.svg" width="150" alt="СБП">
+    <h2>Оплата заказа №{{ $order->id }}</h2>
+    <p style="font-size: 24px; font-weight: bold;">{{ number_format($amount, 2, ',', ' ') }} ₽</p>
+    
+    <div style="background: #eee; width: 200px; height: 200px; margin: 20px auto; display: flex; align-items: center; justify-content: center; border-radius: 10px;">
+        <!-- Здесь может быть любой статичный QR-код -->
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://github.com/Artem" alt="QR">
+    </div>
+
+    <p>Отсканируйте QR-код в приложении банка</p>
+    
+    <!-- Кнопка-заглушка для теста -->
+    <form action="/api/orders/{{ $order->id }}/pay" method="POST">
+        <button type="submit" style="background: #000; color: #fff; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer;">
+            Подтвердить оплату (тест)
+        </button>
+    </form>
+</div>

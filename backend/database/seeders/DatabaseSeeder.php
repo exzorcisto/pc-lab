@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         // Вызываем созданные нами сидеры в строгом порядке
         $this->call([
+            UserSeeder::class,
             CategorySeeder::class,
             ComponentSeeder::class,
         ]);

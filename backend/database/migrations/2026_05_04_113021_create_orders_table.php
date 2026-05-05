@@ -13,14 +13,18 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            
+            $table->decimal('total_price', 12, 2);
+            $table->enum('delivery_type', ['pickup', 'delivery'])->default('pickup');
+            $table->string('address')->nullable();
+            
+            // Статусы заказа и оплаты
             $table->enum('status', ['new', 'processing', 'completed', 'cancelled'])->default('new');
-            $table->decimal('total_price', 10, 2);
-            $table->string('customer_name');
-            $table->string('customer_phone');
-            $table->string('delivery_type')->nullable();
-            $table->string('delivery_address')->nullable();
-            $table->text('manager_comment')->nullable();
+            $table->enum('payment_status', ['pending', 'paid', 'failed', 'refunded'])->default('pending');
+            
+            $table->text('user_comment')->nullable();
+            $table->text('admin_comment')->nullable();
             $table->timestamps();
         });
     }

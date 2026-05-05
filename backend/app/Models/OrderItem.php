@@ -2,20 +2,33 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
-    public $timestamps = false; // В этой таблице они обычно не нужны
-    protected $fillable = ['order_id', 'component_id', 'component_name', 'quantity', 'price_at_purchase'];
+    use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'saved_build_id',
+        'quantity',
+        'price'
+    ];
+
+    /**
+     * Связь с заказом.
+     */
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
 
-    public function component()
+    /**
+     * Связь со сборкой.
+     */
+    public function build()
     {
-        return $this->belongsTo(Component::class);
+        return $this->belongsTo(SavedBuild::class, 'saved_build_id');
     }
 }

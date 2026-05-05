@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->foreignId('component_id')->nullable()->constrained()->onDelete('set null');
-            $table->string('component_name'); // Копия имени на момент покупки[cite: 1]
-            $table->integer('quantity')->default(1);
-            $table->decimal('price_at_purchase', 10, 2); // Фиксация цены[cite: 1]
+        $table->foreignId('order_id')->constrained()->onDelete('cascade');
+        $table->foreignId('saved_build_id')->constrained()->onDelete('cascade');
+        
+        $table->integer('quantity')->default(1);
+        $table->decimal('price', 12, 2); // Цена конкретной сборки на момент заказа
+        $table->timestamps();
         });
     }
 
