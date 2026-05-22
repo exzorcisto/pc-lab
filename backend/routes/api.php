@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ComponentController;
 use App\Http\Controllers\Api\BuildController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\ReviewController; // Добавлено
 use Illuminate\Support\Facades\Route;
 
 // Публичные маршруты
@@ -20,16 +21,22 @@ Route::get('/builds/{hash}', [BuildController::class, 'show']);
 // Маршрут для "оплаты" (симуляция)
 Route::post('/orders/{id}/pay', [OrderController::class, 'pay']); 
 
+// Публичные отзывы
+Route::get('/reviews', [ReviewController::class, 'index']);
+
 // Защищенные маршруты (только с токеном)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::post('/reviews', [ReviewController::class, 'store']);
+    Route::get('/my-reviews', [ReviewController::class, 'myReviews']);
 
     // Сборки (Builds)
     Route::get('/builds', [BuildController::class, 'index']);      // Мои сборки
     Route::post('/builds', [BuildController::class, 'store']);     // Создать кастомную сборку
     Route::put('/builds/{id}', [BuildController::class, 'update']);
     
-    // НОВЫЙ МАРШРУТ: Копирование шаблона (TITAN/CORE) в личные сборки
+    // Копирование шаблона
     Route::post('/builds/template/{templateId}', [BuildController::class, 'storeFromTemplate']);
 
     // Заказы (Orders) - пользователь
@@ -37,6 +44,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'store']);     // Оформить заказ
     
     // Админка (PC Labs Management)
-    Route::get('/admin/orders', [OrderController::class, 'allOrders']);          // Все заказы
-    Route::put('/admin/orders/{id}', [OrderController::class, 'adminUpdate']);   // Редактировать заказ
+    Route::get('/admin/orders', [OrderController::class, 'allOrders']);
+    Route::put('/admin/orders/{id}', [OrderController::class, 'adminUpdate']);
+    
+    // Админка отзывов
+    Route::put('/admin/reviews/{id}/status', [ReviewController::class, 'updateStatus']);
 });
