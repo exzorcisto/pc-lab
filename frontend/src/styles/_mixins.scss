@@ -1,0 +1,14 @@
+@mixin neon-text {
+  text-shadow: 0 0 10px rgba(0, 211, 127, 0.5);
+}
+
+@mixin neon-border {
+  border: 1px solid $accent-green;
+  box-shadow: 0 0 15px rgba(0, 211, 127, 0.2);
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

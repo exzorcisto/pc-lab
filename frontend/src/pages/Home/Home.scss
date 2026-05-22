@@ -1,0 +1,7 @@
+@import '../../styles/variables';
+
+.home {
+  background-color: $bg-dark;
+  min-height: 100vh;
+  padding-top: 120px; // Отступ под фиксированный Header
+}

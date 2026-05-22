@@ -1,0 +1,20 @@
+// src/styles/_variables.scss
+
+// Colors
+$bg-dark: #1B1B1B;       // Глубокий черный фон
+$bg-card: #141414;       // Фон карточек
+$accent-neon: #00FFAE;  // Основной неоновый зеленый
+$text-main: #FFFFFF;
+$text-muted: #888888;
+$border-color: rgba(255, 255, 255, 0.1);
+
+// Shadows & Glow
+$neon-glow: 0 0 15px rgba(0, 255, 174, 0.4);
+
+// Transition
+$transition: 0.3s ease;
+
+// Adaptive Grid
+$mobile: 480px;
+$tablet: 768px;
+$desktop: 1440px;

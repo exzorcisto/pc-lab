@@ -1,0 +1,204 @@
+@import '../../../styles/variables';
+
+.header {
+  background-color: $bg-dark;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 0 100px;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 15px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 600;
+    font-size: 24px;
+    text-decoration: none; // Убираем подчеркивание ссылки
+    
+    img { height: 45px; }
+    .pc-text { color: $accent-neon; }
+    .lab-text { color: #FFFFFF; }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__schedule {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    span { margin-right: 15px; }
+  }
+
+  &__phone {
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    font-size: 16px;
+    margin-right: 15px;
+    transition: color 0.3s;
+    &:hover { color: $text-muted; }
+  }
+
+  &__socials {
+    display: flex;
+    gap: 12px;
+    a {
+      display: flex;
+      transition: transform 0.2s, filter 0.3s;
+      &:hover {
+        transform: translateY(-2px);
+        filter: drop-shadow(0 0 5px $text-muted);
+      }
+    }
+    img { width: 28px; height: 28px; }
+  }
+
+  &__nav ul {
+    display: flex;
+    list-style: none;
+
+    .nav-item {
+      position: relative;
+      
+      &__link {
+        color: #FFFFFF;
+        text-decoration: none;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        transition: color 0.3s;
+        cursor: pointer;
+        svg {
+            transition: transform 0.3s ease; // Плавность поворота
+        }
+
+        &:hover {
+          svg {
+           transform: rotate(180deg); // Переворот на 180 градусов
+        }
+    }
+
+        &:hover { color: $text-muted; }
+      }
+
+      &:first-child .nav-item__link { padding-left: 0; }
+
+      // Логика выпадающего списка
+      &:hover .dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .dropdown {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 100%;
+    background: #252525;
+    min-width: 220px;
+    padding: 10px 0;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    list-style: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+    &__link {
+      width: 250px;
+      display: block;
+      padding: 10px 20px;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.2s;
+    
+      &:hover {
+        color: $text-muted;
+        transition: $transition;
+      }
+    }
+  }
+  &__actions {
+    display: flex;
+    .action-btn {
+      padding: 10px;
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      cursor: pointer;
+      transition: 0.2s;
+      &:hover { color: $text-muted; }
+    }
+  }
+  
+  // Остальные стили (divider, actions и т.д.) из твоего исходника
+  &__divider { border: none; border-top: 1px solid $border-color; margin: 0; }
+  &__bottom { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+}
+@media (max-width: 1200px) {
+  .header {
+    padding: 0 40px; // Уменьшаем боковой паддинг на планшетах
+  }
+}
+
+@media (max-width: 1024px) {
+  .header {
+    padding: 0 20px;
+    position: static; // Отключаем фиксацию для мобилок, если нужно
+
+    &__info {
+      gap: 10px;
+    }
+
+    &__schedule {
+      display: none; // Скрываем расписание на маленьких экранах
+    }
+
+    &__nav {
+      display: none; // Здесь обычно реализуется бургер-меню
+    }
+
+    &__bottom {
+      justify-content: flex-end; // Смещаем иконки вправо
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    &__top {
+      flex-direction: column; // Складываем лого и инфо друг под друга
+      gap: 15px;
+      padding: 15px 0;
+    }
+
+    &__logo img {
+      height: 35px;
+    }
+
+    &__socials {
+      img { width: 24px; height: 24px; }
+    }
+  }
+}
