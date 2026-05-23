@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BuildController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\RequestController;
+use App\Http\Controllers\Api\AdminController;
 use Illuminate\Support\Facades\Route;
 
 // --- Публичные маршруты ---
@@ -49,4 +50,6 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/admin/requests/callback', [RequestController::class, 'indexCallback']);
     Route::put('/admin/requests/callback/{id}', [RequestController::class, 'updateCallbackStatus']);
+
+    Route::get('/admin/stats', [AdminController::class, 'getStats']);
 });
