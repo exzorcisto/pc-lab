@@ -4,49 +4,49 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ComponentController;
 use App\Http\Controllers\Api\BuildController;
 use App\Http\Controllers\Api\OrderController;
-use App\Http\Controllers\Api\ReviewController; // Добавлено
+use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\RequestController;
 use Illuminate\Support\Facades\Route;
 
-// Публичные маршруты
+// --- Публичные маршруты ---
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Каталог компонентов (открыт для всех)
 Route::get('/components', [ComponentController::class, 'index']);
 Route::get('/components/{id}', [ComponentController::class, 'show']);
-
-// Посмотреть сборку по хэшу (публично)
 Route::get('/builds/{hash}', [BuildController::class, 'show']);
-
-// Маршрут для "оплаты" (симуляция)
 Route::post('/orders/{id}/pay', [OrderController::class, 'pay']); 
 
-// Публичные отзывы
 Route::get('/reviews', [ReviewController::class, 'index']);
+Route::post('/requests/callback', [RequestController::class, 'storeCallback']);
 
-// Защищенные маршруты (только с токеном)
+// --- Защищенные маршруты ---
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/reviews', [ReviewController::class, 'store']);
     Route::get('/my-reviews', [ReviewController::class, 'myReviews']);
 
-    // Сборки (Builds)
-    Route::get('/builds', [BuildController::class, 'index']);      // Мои сборки
-    Route::post('/builds', [BuildController::class, 'store']);     // Создать кастомную сборку
+    Route::get('/builds', [BuildController::class, 'index']);
+    Route::post('/builds', [BuildController::class, 'store']);
     Route::put('/builds/{id}', [BuildController::class, 'update']);
-    
-    // Копирование шаблона
     Route::post('/builds/template/{templateId}', [BuildController::class, 'storeFromTemplate']);
 
-    // Заказы (Orders) - пользователь
-    Route::get('/orders', [OrderController::class, 'index']);      // Моя история заказов
-    Route::post('/orders', [OrderController::class, 'store']);     // Оформить заказ
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::post('/orders', [OrderController::class, 'store']);
     
-    // Админка (PC Labs Management)
+    Route::post('/requests/service', [RequestController::class, 'storeService']);
+    
+    // Админка
     Route::get('/admin/orders', [OrderController::class, 'allOrders']);
     Route::put('/admin/orders/{id}', [OrderController::class, 'adminUpdate']);
     
-    // Админка отзывов
     Route::put('/admin/reviews/{id}/status', [ReviewController::class, 'updateStatus']);
+
+    // Админка заявок
+    Route::get('/admin/requests/service', [RequestController::class, 'indexService']);
+    Route::put('/admin/requests/service/{id}', [RequestController::class, 'updateService']);
+    
+    Route::get('/admin/requests/callback', [RequestController::class, 'indexCallback']);
+    Route::put('/admin/requests/callback/{id}', [RequestController::class, 'updateCallbackStatus']);
 });
